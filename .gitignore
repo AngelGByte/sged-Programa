@@ -1,0 +1,48 @@
+# Backend (Maven/Java)
+sged-backend/target/
+sged-backend/.classpath
+sged-backend/.project
+sged-backend/.settings/
+sged-backend/*.log
+sged-backend/.DS_Store
+
+# Frontend (Node.js)
+sged-frontend/node_modules/
+sged-frontend/dist/
+sged-frontend/.vite/
+sged-frontend/.env.local
+sged-frontend/.env
+sged-frontend/npm-debug.log
+sged-frontend/yarn-error.log
+sged-frontend/.DS_Store
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Database
+*.db
+*.sqlite
+sged_db/
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
