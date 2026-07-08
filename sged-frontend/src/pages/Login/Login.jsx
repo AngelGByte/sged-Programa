@@ -1,7 +1,8 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../hooks/useAuth'
 import { authService } from '../../services'
+import { getApiErrorMessage } from '../../services/errorMessage'
 import { toast } from 'react-toastify'
 import '../styles/auth.scss'
 
@@ -27,7 +28,7 @@ function Login() {
       toast.success('¡Login exitoso!')
       navigate('/dashboard')
     } catch (error) {
-      toast.error(error.response?.data?.message || 'Error al iniciar sesión')
+      toast.error(getApiErrorMessage(error, 'Error al iniciar sesión'))
     } finally {
       setLoading(false)
     }
@@ -70,7 +71,7 @@ function Login() {
         </form>
 
         <p className="register-link">
-          ¿No tienes cuenta? <a href="/register">Regístrate aquí</a>
+          ¿No tienes cuenta? <Link to="/register">Regístrate aquí</Link>
         </p>
       </div>
     </div>

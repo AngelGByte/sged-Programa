@@ -1,6 +1,7 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { authService } from '../../services'
+import { getApiErrorMessage } from '../../services/errorMessage'
 import { toast } from 'react-toastify'
 import '../styles/auth.scss'
 
@@ -24,7 +25,7 @@ function Register() {
       toast.success('¡Registro exitoso! Inicia sesión.')
       navigate('/login')
     } catch (error) {
-      toast.error(error.response?.data?.message || 'Error al registrar')
+      toast.error(getApiErrorMessage(error, 'Error al registrar'))
     } finally {
       setLoading(false)
     }
@@ -91,7 +92,7 @@ function Register() {
         </form>
 
         <p className="register-link">
-          ¿Ya tienes cuenta? <a href="/login">Inicia sesión aquí</a>
+          ¿Ya tienes cuenta? <Link to="/login">Inicia sesión aquí</Link>
         </p>
       </div>
     </div>
