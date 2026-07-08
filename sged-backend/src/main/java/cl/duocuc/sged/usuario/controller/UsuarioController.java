@@ -127,13 +127,12 @@ class AuthController {
         // Generar token JWT
         String token = jwtConfig.generateToken(usuario.getEmail(), usuario.getRol().toString());
 
-        LoginResponseDTO response = LoginResponseDTO.builder()
-                .token(token)
-                .email(usuario.getEmail())
-                .nombre(usuario.getNombre())
-                .apellido(usuario.getApellido())
-                .rol(usuario.getRol().toString())
-                .build();
+        LoginResponseDTO response = new LoginResponseDTO();
+        response.setToken(token);
+        response.setEmail(usuario.getEmail());
+        response.setNombre(usuario.getNombre());
+        response.setApellido(usuario.getApellido());
+        response.setRol(usuario.getRol().toString());
 
         return ResponseEntity.ok(response);
     }
@@ -191,6 +190,14 @@ class LoginResponseDTO {
     private String nombre;
     private String apellido;
     private String rol;
+    
+    public LoginResponseDTO() {}
+    
+    public void setToken(String token) { this.token = token; }
+    public void setEmail(String email) { this.email = email; }
+    public void setNombre(String nombre) { this.nombre = nombre; }
+    public void setApellido(String apellido) { this.apellido = apellido; }
+    public void setRol(String rol) { this.rol = rol; }
 }
 
 /**

@@ -2,13 +2,14 @@ package cl.duocuc.sged.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
@@ -19,31 +20,39 @@ import java.io.IOException;
  *        Si válido: pasa a Controller. Si inválido: rechaza con 401.
  */
 @Component
-public class JwtAuthFilter implements Filter {
+public class JwtAuthFilter extends OncePerRequestFilter {
 
     @Autowired
     private JwtConfig jwtConfig;
 
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-            throws IOException, ServletException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+            throws ServletException, IOException {
         
-        HttpServletRequest httpRequest = (HttpServletRequest) request;
-        HttpServletResponse httpResponse = (HttpServletResponse) response;
-        
-        // Obtener el header Authorization
-        String authHeader = httpRequest.getHeader("Authorization");
-        
-        if (authHeader != null && authHeader.startsWith("Bearer ")) {
-            String token = authHeader.substring(7);
+        try {
+            // Obtener el header Authorization
+            String authHeader = request.getHeader("Authorization");
             
-            if (!jwtConfig.validateToken(token)) {
-                httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                httpResponse.getWriter().write("{\"error\": \"Token inválido o expirado\"}");
-                return;
+            if (authHeader != null && authHeader.startsWith("Bearer ")) {
+                String token = authHeader.substring(7);
+                
+                if (jwtConfig.validateToken(token)) {
+                    String email = jwtConfig.getEmailFromToken(token);
+                    String rol = jwtConfig.getRolFromToken(token);
+                    
+                    // Crear autenticación y establecer en el contexto
+                    Authentication auth = new UsernamePasswordAuthenticationToken(
+                            email, null, java.util.Collections.emptyList()
+                    );
+                    SecurityContextHolder.getContext().setAuthentication(auth);
+                }
             }
+        } catch (Exception e) {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.getWriter().write("{\"error\": \"Token inválido o expirado\"}");
+            return;
         }
         
-        chain.doFilter(request, response);
+        filterChain.doFilter(request, response);
     }
 }
