@@ -1,4 +1,5 @@
 import { useAuth } from '../../hooks/useAuth'
+import './Dashboard.scss'
 
 /**
  * Dashboard - Página principal después de login.
@@ -8,8 +9,10 @@ function Dashboard() {
 
   return (
     <div className="dashboard">
-      <h1>Bienvenido, {user?.nombre}!</h1>
-      <p>Esta es tu página de inicio.</p>
+      <header className="dashboard-header">
+        <h1>Bienvenido, {user?.nombre || 'Usuario'}!</h1>
+        <p>Esta es tu página de inicio.</p>
+      </header>
       
       <div className="dashboard-grid">
         <div className="dashboard-card">
