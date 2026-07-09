@@ -22,8 +22,10 @@ public class CorsConfig {
         // Orígenes permitidos (frontend)
         configuration.setAllowedOrigins(Arrays.asList(
                 "http://localhost:5173",    // Vite dev server
+                "http://localhost:5174",    // Vite dev server (alternative port)
                 "http://localhost:3000",     // Alternative frontend
-                "http://127.0.0.1:5173"
+                "http://127.0.0.1:5173",
+                "http://127.0.0.1:5174"
         ));
         
         // Métodos HTTP permitidos

@@ -5,7 +5,7 @@ import axios from 'axios'
  * Crea un cliente HTTP con el token JWT en cada petición.
  */
 const axiosConfig = axios.create({
-  baseURL: '/api',
+  baseURL: 'http://localhost:8081/api',
   headers: {
     'Content-Type': 'application/json'
   }
