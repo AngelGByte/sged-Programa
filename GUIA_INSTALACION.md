@@ -2,7 +2,8 @@
 
 ## Requisitos Previos
 
-- **Java 25** o superior
+- **Java 25 LTS** o superior
+- **Maven 3.9.9+**
 - **Node.js 20+** y npm
 - **MySQL 8.0+**
 - **Git**
@@ -40,10 +41,10 @@ cd sged-backend
 # - Cambiar jwt.secret a una clave segura
 
 # Compilar
-./mvnw clean install
+mvn clean install
 
 # O si prefieres skipear tests:
-./mvnw clean install -DskipTests
+mvn clean install -DskipTests
 ```
 
 ### 4. Configurar Frontend
@@ -67,7 +68,7 @@ npm install
 cd sged-backend
 
 # Opción 1: Maven
-./mvnw spring-boot:run
+mvn spring-boot:run
 
 # Opción 2: Java directo (después de compilar)
 java -jar target/sged-backend-1.0.0.jar
@@ -236,7 +237,7 @@ jwt.expiration=86400000  # milisegundos (24 hrs)
 cd sged-backend
 
 # Build jar
-./mvnw clean package
+mvn clean package
 
 # Ejecutar jar
 java -jar target/sged-backend-1.0.0.jar

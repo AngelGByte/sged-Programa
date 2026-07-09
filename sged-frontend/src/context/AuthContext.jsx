@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from 'react'
+import { createContext, useState, useEffect } from 'react'
 
 /**
  * AuthContext - Contexto global de autenticación.
@@ -18,7 +18,11 @@ export const AuthProvider = ({ children }) => {
     
     if (savedToken && savedUser) {
       setToken(savedToken)
-      setUser(JSON.parse(savedUser))
+      try {
+        setUser(JSON.parse(savedUser))
+      } catch {
+        localStorage.removeItem('user')
+      }
     }
     
     setLoading(false)

@@ -50,7 +50,7 @@ Este proyecto implementa un **monolito modular** que demuestra conceptos de arqu
 
 ## ✨ Características
 
-### Backend (Spring Boot 4.0.1 + Java 25)
+### Backend (Spring Boot 4.1.0 + Java 25 LTS)
 - ✅ **Autenticación JWT** con 24h expiration
 - ✅ **5 módulos independientes** con patrón Entity→Repository→Service→Controller
 - ✅ **Control de acceso basado en roles** (ADMINISTRADOR, DOCENTE, ESTUDIANTE, etc.)
@@ -75,8 +75,8 @@ Este proyecto implementa un **monolito modular** que demuestra conceptos de arqu
 | Componente | Versión | Propósito |
 |---|---|---|
 | Java | 25 | Lenguaje backend |
-| Spring Boot | 4.0.1 | Framework backend |
-| Maven | 4.0 | Build backend |
+| Spring Boot | 4.1.0 | Framework backend |
+| Maven | 3.9.9+ | Build backend |
 | MySQL | 8.0+ | Base de datos |
 | React | 19.0 | UI framework |
 | Vite | 6.0 | Build frontend |
@@ -181,7 +181,7 @@ sged-monolito/
 ## 🚀 Quickstart
 
 ### 1. Requisitos
-- Java 25+
+- Java 25 LTS+
 - Node.js 20+
 - MySQL 8.0+
 

@@ -1,6 +1,7 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { authService } from '../../services'
+import { getApiErrorMessage } from '../../services/errorMessage'
 import { toast } from 'react-toastify'
 import '../styles/auth.scss'
 
@@ -12,6 +13,7 @@ function Register() {
   const [apellido, setApellido] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
 
@@ -24,7 +26,7 @@ function Register() {
       toast.success('¡Registro exitoso! Inicia sesión.')
       navigate('/login')
     } catch (error) {
-      toast.error(error.response?.data?.message || 'Error al registrar')
+      toast.error(getApiErrorMessage(error, 'Error al registrar'))
     } finally {
       setLoading(false)
     }
@@ -75,14 +77,25 @@ function Register() {
 
           <div className="form-group">
             <label htmlFor="password">Contraseña</label>
-            <input
-              id="password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              disabled={loading}
-            />
+            <div className="password-field">
+              <input
+                id="password"
+                type={showPassword ? 'text' : 'password'}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                disabled={loading}
+              />
+              <button
+                type="button"
+                className="toggle-password"
+                onClick={() => setShowPassword((prev) => !prev)}
+                disabled={loading}
+                aria-label={showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'}
+              >
+                {showPassword ? 'Ocultar' : 'Mostrar'}
+              </button>
+            </div>
           </div>
 
           <button type="submit" disabled={loading}>
@@ -91,7 +104,7 @@ function Register() {
         </form>
 
         <p className="register-link">
-          ¿Ya tienes cuenta? <a href="/login">Inicia sesión aquí</a>
+          ¿Ya tienes cuenta? <Link to="/login">Inicia sesión aquí</Link>
         </p>
       </div>
     </div>
